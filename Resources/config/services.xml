@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="l3l0_open_social.provider.type" />
+        <parameter key="l3l0_open_social.storage.type" />
+        <parameter key="l3l0_open_social.factory.class">l3l0\OpenSocialBundle\Factory\OsapiFactory</parameter>
+    </parameters>
+
+    <services>
+        <service id="l3l0_open_social_osapi_factory" class="%l3l0_open_social.factory.class%">
+            <argument>%l3l0_open_social.provider.type%</argument>
+            <argument>%l3l0_open_social.storage.type%</argument>
+        </service>
+    </services>
+    <!--
+    <parameters>
+        <parameter key="l3l0_open_social.example.class">l3l0\Bundle\OpenSocialBundle\Example</parameter>
+    </parameters>
+
+    <services>
+        <service id="l3l0_open_social.example" class="%l3l0_open_social.example.class%">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
+        </service>
+    </services>
+    -->
+</container>
