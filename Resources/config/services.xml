@@ -7,6 +7,7 @@
     <parameters>
         <parameter key="l3l0_open_social.provider.type" />
         <parameter key="l3l0_open_social.storage.type" />
+        <parameter key="l3l0_open_social.site_id" />
         <parameter key="l3l0_open_social.factory.class">l3l0\OpenSocialBundle\Factory\OsapiFactory</parameter>
     </parameters>
 
@@ -16,17 +17,4 @@
             <argument>%l3l0_open_social.storage.type%</argument>
         </service>
     </services>
-    <!--
-    <parameters>
-        <parameter key="l3l0_open_social.example.class">l3l0\Bundle\OpenSocialBundle\Example</parameter>
-    </parameters>
-
-    <services>
-        <service id="l3l0_open_social.example" class="%l3l0_open_social.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
-        </service>
-    </services>
-    -->
 </container>

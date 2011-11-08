@@ -32,6 +32,8 @@ class l3l0OpenSocialExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
+        $container->setParameter('l3l0_open_social.site_id', $config['site_id']);
+
         $this->registerClassConfiguration($config['types'], $container, $loader);
     }
 

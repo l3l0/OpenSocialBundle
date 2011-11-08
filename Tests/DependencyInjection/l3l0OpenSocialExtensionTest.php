@@ -17,15 +17,17 @@ class l3l0OpenSocialExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $containerMock = $this->getContainerMock();
 
-        $containerMock->expects($this->exactly(2))
+        $containerMock->expects($this->exactly(3))
             ->method('setParameter')
             ->with($this->logicalOr(
                     $this->equalTo('l3l0_open_social.provider.type'),
-                    $this->equalTo('l3l0_open_social.storage.type')
+                    $this->equalTo('l3l0_open_social.storage.type'),
+                    $this->equalTo('l3l0_open_social.site_id')
                 ),
                 $this->logicalOr(
                     $this->equalTo('FriendConnectProvider'), 
-                    $this->equalTo('FileStorage')
+                    $this->equalTo('FileStorage'),
+                    $this->equalTo('someSiteId')
                 )
             );
 
@@ -55,15 +57,17 @@ class l3l0OpenSocialExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $containerMock = $this->getContainerMock();
 
-        $containerMock->expects($this->exactly(2))
+        $containerMock->expects($this->exactly(3))
             ->method('setParameter')
             ->with($this->logicalOr(
                     $this->equalTo('l3l0_open_social.provider.type'),
-                    $this->equalTo('l3l0_open_social.storage.type')
+                    $this->equalTo('l3l0_open_social.storage.type'),
+                    $this->equalTo('l3l0_open_social.site_id')
                 ),
                 $this->logicalOr(
                     $this->equalTo('myOsapiProvider'), 
-                    $this->equalTo('myOsapiStorage')
+                    $this->equalTo('myOsapiStorage'),
+                    $this->equalTo('someSiteId')
                 )
             );
 
