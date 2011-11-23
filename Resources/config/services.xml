@@ -16,5 +16,13 @@
             <argument>%l3l0_open_social.provider.type%</argument>
             <argument>%l3l0_open_social.storage.type%</argument>
         </service>
+        <service id="l3l0_osapi.security.authentication.provider" class="l3l0\Bundle\OpenSocialBundle\Security\Authentication\Provider\FriendConnectProvider" public="false">
+            <argument type="service" id="l3l0_open_social_osapi_factory" />
+        </service>
+        <service id="l3l0_osapi.security.authentication.listener" class="l3l0\Bundle\OpenSocialBundle\Security\Firewall\FriendConnectListener" public="false">
+            <argument type="service" id="security.context"/>
+            <argument type="service" id="security.authentication.manager" />
+            <argument>%l3l0_open_social.site_id%</argument>
+        </service>
     </services>
 </container>
