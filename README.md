@@ -52,6 +52,8 @@ This Bundle may provide integration with osapi (OpenSocial API).
 ## Usage
 ========
 
+1. Security application configuration:
+
     * We can enable firewall for friend connect in ``app/config/security.yml``:
 
             security:
