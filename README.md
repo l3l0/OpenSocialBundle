@@ -25,7 +25,7 @@ This Bundle may provide integration with osapi (OpenSocial API).
                 ...
                 'l3l0' => __DIR__ . '/../vendor/bundles'
             );
-    
+
     * Register namespace ``app/AppKernel.php``:
 
             public function registerBundles()
@@ -51,4 +51,13 @@ This Bundle may provide integration with osapi (OpenSocial API).
 
 ## Usage
 ========
-TODO...
+
+    * We can enable firewall for friend connect in ``app/config/security.yml``:
+
+            security:
+                firewalls:
+                    friend_connect:
+                        pattern: ^/yourpath/pattern$
+                        l3l0_osapi: true
+
+*TODO*
