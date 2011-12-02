@@ -57,11 +57,14 @@ class FriendConnectProvider implements AuthenticationProviderInterface
     private function getFriendConnectUserId($osapi)
     {
         $batch = $osapi->newBatch();
-        $batch->add($osapi->pepole->get(array('userId' => '@me')));
+        $batch->add($osapi->people->get(array('userId' => '@me')));
         $result = $batch->execute();
 
-        if (isset($result[0]['data'])) {
-            return $result[0]['data']->id;
+        if (is_array($result)) {
+          $result = reset($result);
+          if ($result && $result->getId()) {
+              return (string) $result->getId();
+          }
         }
 
         throw new \Exception();

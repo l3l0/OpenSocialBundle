@@ -8,7 +8,7 @@
         <parameter key="l3l0_open_social.provider.type" />
         <parameter key="l3l0_open_social.storage.type" />
         <parameter key="l3l0_open_social.site_id" />
-        <parameter key="l3l0_open_social.factory.class">l3l0\OpenSocialBundle\Factory\OsapiFactory</parameter>
+        <parameter key="l3l0_open_social.factory.class">l3l0\Bundle\OpenSocialBundle\Factory\OsapiFactory</parameter>
     </parameters>
 
     <services>

@@ -36,6 +36,7 @@ class FriendConnectListener implements ListenerInterface
             throw new \InvalidArgumentException('$siteId must not be empty.');
         }
 
+        $this->siteId                = $siteId;
         $this->securityContext       = $securityContext;
         $this->authenticationManager = $authenticationManager;
     }

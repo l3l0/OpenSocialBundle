@@ -21,7 +21,7 @@ class FriendConnectProviderTest extends \PHPUnit_Framework_TestCase
         $provider = new FriendConnectProvider($osapiFactory);
         $token = $provider->authenticate(new FriendConnectToken('testToken'));
 
-        $this->assertEquals('userId', $token->getUser());
+        $this->assertEquals('123', $token->getUser());
     }
 
     public function testThatCannotAuthenticateWithoutFriendConnectToken()
@@ -129,8 +129,12 @@ class FriendConnectProviderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue($osapiRequest));
 
-        $pepoleClass = new \stdClass;
-        $pepoleClass->id = 'userId';
+        $osapiPerson = $this->getMockBuilder('\\osapiPerson')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $osapiPerson->expects($this->any())
+            ->method('getId')
+            ->will($this->returnValue(123));
 
         $batch = $this->getMockBuilder('\\osapiBatch')
             ->disableOriginalConstructor()
@@ -141,7 +145,7 @@ class FriendConnectProviderTest extends \PHPUnit_Framework_TestCase
             ->method('execute');
 
         if ($notEmptyValue) {
-            $executeMethod->will($this->returnValue(array(0 => array('data' => $pepoleClass))));
+            $executeMethod->will($this->returnValue(array(0 => $osapiPerson)));
         } else {
             $executeMethod->will($this->returnValue(array()));
         }
