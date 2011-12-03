@@ -15,22 +15,39 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use l3l0\Bundle\OpenSocialBundle\Security\Authentication\Token\FriendConnectToken;
 
 class FriendConnectListener implements ListenerInterface
 {
+    /**
+     * @var Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface
+     */
     private $authenticationManager;
+
+    /**
+     * @var Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface
+     */
     private $securityContext;
+
+    /**
+     * @var string
+     */
     private $siteId;
+
+    /**
+     * @var string
+     */
+    private $publicPath = null;
 
     /**
      * @param SecurityContextInterface        $securityContext
      * @param AuthenticationManagerInterface  $authenticationManager
      * @param string                          $siteId
      */
-    public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, $siteId)
+    public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, $siteId, $publicPath = null)
     {
         if (!$siteId) {
             throw new \InvalidArgumentException('$siteId must not be empty.');
@@ -39,6 +56,7 @@ class FriendConnectListener implements ListenerInterface
         $this->siteId                = $siteId;
         $this->securityContext       = $securityContext;
         $this->authenticationManager = $authenticationManager;
+        $this->publicPath            = $publicPath;
     }
 
     /**
@@ -59,14 +77,20 @@ class FriendConnectListener implements ListenerInterface
         } catch (AuthenticationException $e) {
         }
 
-        $response = new Response();
+        if ($this->publicPath) {
+            $response = new RedirectResponse($this->publicPath);
+        } else {
+            $response = new Response();
+        }
         $response->setStatusCode(403);
+
         $event->setResponse($response);
     }
 
     /**
      * @param Request $request
      * @return string
+     * @codeCoverageIgnore
      */
     protected function getFcAuthKey(Request $request)
     {

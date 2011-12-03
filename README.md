@@ -1,5 +1,3 @@
-##Bundle under development!!!
-
 ## Introduction
 ===============
 This Bundle may provide integration with osapi (OpenSocial API).
@@ -54,7 +52,7 @@ This Bundle may provide integration with osapi (OpenSocial API).
 
 1. Security application configuration:
 
-    * We can enable firewall for friend connect in ``app/config/security.yml``:
+    * We can enable firewall for friend connect in ``app/config/security.yml``. When user is not signed via friend connectto our site will be redirected to ``/`` page by default:
 
             security:
                 firewalls:
@@ -62,4 +60,12 @@ This Bundle may provide integration with osapi (OpenSocial API).
                         pattern: ^/yourpath/pattern$
                         l3l0_osapi: true
 
+    * You can define when user should be redirect when is not authenticated via ``public_path`` option:
+
+            security:
+                firewalls:
+                    friend_connect:
+                        pattern: ^/yourpath/pattern$
+                        l3l0_osapi:
+                            public_path: /app_dev.php/demo
 *TODO*

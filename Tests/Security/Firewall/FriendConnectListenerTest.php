@@ -13,6 +13,36 @@ use l3l0\Bundle\OpenSocialBundle\Security\Firewall\FriendConnectListener;
 
 class FriendConnectListenerTest extends \PHPUnit_Framework_TestCase
 {
+    public function testThatRedirectedToPublicPathWhenUnauthenticated()
+    {
+        $authManager = $this->getAuthenticationManager();
+        $authManager->expects($this->once())
+            ->method('authenticate')
+            ->with($this->isInstanceOf('l3l0\\Bundle\\OpenSocialBundle\\Security\\Authentication\\Token\\FriendConnectToken'))
+            ->will($this->throwException(new \Symfony\Component\Security\Core\Exception\AuthenticationException('testMessage')));
+
+        $listener = $this->getMock('l3l0\\Bundle\\OpenSocialBundle\\Security\\Firewall\\FriendConnectListener',
+            array(
+                'getFcAuthKey'
+            ),
+            array(
+                $this->getSecurityContext(),
+                $authManager,
+                'site_id',
+                '/publicPath'
+            ));
+        $listener->expects($this->once())
+            ->method('getFcAuthKey')
+            ->will($this->returnValue('testFcAuthToken'));
+
+        $responseEvent = $this->getResponseEvent();
+        $responseEvent->expects($this->any())
+            ->method('setResponse')
+            ->with($this->isInstanceOf('Symfony\\Component\\HttpFoundation\\RedirectResponse'));
+
+        $listener->handle($responseEvent);
+    }
+
     public function testThatCanAttemptAuthenticationWithFriendConnect()
     {
         $authManager = $this->getAuthenticationManager();
@@ -91,7 +121,12 @@ class FriendConnectListenerTest extends \PHPUnit_Framework_TestCase
             ->method('getFcAuthKey')
             ->will($this->returnValue('testFcAuthToken'));
 
-        $listener->handle($this->getResponseEvent());
+        $responseEvent = $this->getResponseEvent();
+        $responseEvent->expects($this->any())
+            ->method('setResponse')
+            ->with($this->isInstanceOf('Symfony\\Component\\HttpFoundation\\Response'));
+
+        $listener->handle($responseEvent);
     }
 
     /**
@@ -131,7 +166,7 @@ class FriendConnectListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getResponseEvent()
     {
-        $responseEventMock = $this->getMock('Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent', array('getRequest'), array(), '', false);
+        $responseEventMock = $this->getMock('Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent', array('getRequest', 'setResponse'), array(), '', false);
         $responseEventMock->expects($this->any())
             ->method('getRequest')
             ->will($this->returnValue($this->getRequest()));

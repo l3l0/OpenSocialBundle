@@ -23,7 +23,12 @@ class OpenSocialFactory implements SecurityFactoryInterface
         $listenerId = 'security.authentication.listener.osapi.' . $id;
 
         $container->setDefinition($providerId, new DefinitionDecorator('l3l0_osapi.security.authentication.provider'));
-        $container->setDefinition($listenerId, new DefinitionDecorator('l3l0_osapi.security.authentication.listener'));
+        $definition = $container->setDefinition($listenerId, new DefinitionDecorator('l3l0_osapi.security.authentication.listener'));
+
+        if (isset($config['public_path']))
+        {
+          $definition->replaceArgument(3, $config['public_path']);
+        }
 
         return array($providerId, $listenerId, $defaultEntryPoint);
     }
@@ -39,5 +44,10 @@ class OpenSocialFactory implements SecurityFactoryInterface
     }
 
     public function addConfiguration(NodeDefinition $node)
-    {}
+    {
+        $node
+            ->children()
+                ->scalarNode('public_path')->defaultValue('/')
+            ->end();
+    }
 }

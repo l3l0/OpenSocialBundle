@@ -11,6 +11,9 @@ namespace l3l0\Bundle\OpenSocialBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * @codeCoverageIgnore
+ */
 class l3l0OpenSocialBundle extends Bundle
 {
 }

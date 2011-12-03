@@ -54,9 +54,8 @@ class OsapiFactory implements FactoryInterface
         $class = 'l3l0\\Bundle\\OpenSocialBundle\\Factory\\Provider\\' . $this->providerType . 'Factory';
         if (class_exists($class)) {
             $providerFactory = new $class();
-            if ($providerFactory instanceof ProviderFactoryInterface) {
-                return $providerFactory->create($options);
-            }
+
+            return $providerFactory->create($options);
         }
 
         throw new \InvalidArgumentException(sprintf('Cannot create provider for %s type', $this->providerType));
@@ -73,9 +72,7 @@ class OsapiFactory implements FactoryInterface
         if (class_exists($class)) {
             $authFactory = new $class();
 
-            if ($authFactory instanceof AuthFactoryInterface) {
-                return $authFactory->create($options);
-            }
+            return $authFactory->create($options);
         }
     }
 
@@ -90,9 +87,7 @@ class OsapiFactory implements FactoryInterface
         if (class_exists($class)) {
             $storageFactory = new $class();
 
-            if ($storageFactory instanceof StorageFactoryInterface) {
-                return $storageFactory->create($options);
-            }
+            return $storageFactory->create($options);
         }
 
         throw new \InvalidArgumentException(sprintf('Cannot create storage for %s type', $this->storageType));

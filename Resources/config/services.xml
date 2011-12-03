@@ -23,6 +23,7 @@
             <argument type="service" id="security.context"/>
             <argument type="service" id="security.authentication.manager" />
             <argument>%l3l0_open_social.site_id%</argument>
+            <argument /> <!-- public_path -->
         </service>
     </services>
 </container>

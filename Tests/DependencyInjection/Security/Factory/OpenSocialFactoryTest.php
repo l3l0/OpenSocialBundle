@@ -29,6 +29,23 @@ class OpenSocialFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('security.authentication.listener.osapi.someId', $factoryKeys[1]);
     }
 
+    public function testThatPublicPathOptionIsPassToListener()
+    {
+        $factory = new OpenSocialFactory();
+
+        $definition = $this->getMock('Symfony\\Component\\DependencyInjection\\Definition');
+        $definition->expects($this->exactly(1))
+            ->method('replaceArgument')
+            ->with($this->equalTo(3), $this->equalTo('/publicPath'));
+
+        $containerBuilder = $this->getMock('Symfony\\Component\\DependencyInjection\\ContainerBuilder');
+        $containerBuilder->expects($this->at(1))
+            ->method('setDefinition')
+            ->will($this->returnValue($definition));
+
+        $factory->create($containerBuilder, 'someId', array('public_path' => '/publicPath'), null, 'defaultEntryPoint');
+    }
+
     public function testThatCalledAtPreAuthPosition()
     {
         $factory = new OpenSocialFactory();
@@ -41,6 +58,35 @@ class OpenSocialFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new OpenSocialFactory();
 
         $this->assertEquals('l3l0_osapi', $factory->getKey());
+    }
+
+    public function testThatPublicPathOptionIsAddedToNode()
+    {
+        $factory = new OpenSocialFactory();
+
+        $nodeDefinition = $this->getMockBuilder('Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $scalarNodeDefinition = $this->getMockBuilder('Symfony\\Component\\Config\\Definition\\Builder\\ScalarNodeDefinition')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $scalarNodeDefinition->expects($this->exactly(1))
+            ->method('defaultValue')
+            ->with($this->equalTo('/'))
+            ->will($this->returnSelf());
+
+        $nodeBuilder = $this->getMock('Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder');
+        $nodeBuilder->expects($this->exactly(1))
+            ->method('scalarNode')
+            ->with($this->equalTo('public_path'))
+            ->will($this->returnValue($scalarNodeDefinition));
+
+        $nodeDefinition->expects($this->once())
+            ->method('children')
+            ->will($this->returnValue($nodeBuilder));
+
+        $factory->addConfiguration($nodeDefinition);
     }
 
     private function getContainerBuilder()
