@@ -62,7 +62,7 @@ class FriendConnectProvider implements AuthenticationProviderInterface
 
         if (is_array($result)) {
           $result = reset($result);
-          if ($result && $result->getId()) {
+          if ($result instanceof \osapiPerson && $result->getId()) {
               return (string) $result->getId();
           }
         }
