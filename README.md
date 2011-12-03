@@ -60,7 +60,7 @@ This Bundle may provide integration with osapi (OpenSocial API).
                         pattern: ^/yourpath/pattern$
                         l3l0_osapi: true
 
-    * You can define when user should be redirect when is not authenticated via ``public_path`` option:
+    * You can define where user should be redirect when is not authenticated via ``public_path`` option:
 
             security:
                 firewalls:
