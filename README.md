@@ -2,6 +2,8 @@
 ===============
 This Bundle provides integration with osapi (OpenSocial API). Right now bundle provides a Symfony2 authentication via FriendConnect so user can login into Symfony2 using Friend Connect mechanism. Bundle allow to use all osapi providers, but only FriendConnect provider have implemented Symfony2 authentication mechanism (right now). Bundle has not had twig integration yet.
 
+[![Build Status](https://secure.travis-ci.org/l3l0/OpenSocialBundle.png)](http://travis-ci.org/l3l0/OpenSocialBundle)
+
 ## Installation
 ===============
 
