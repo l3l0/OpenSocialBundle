@@ -14,7 +14,7 @@ set_time_limit(0);
 $vendorDir = __DIR__;
 $deps = array(
     array('git', 'symfony', 'http://github.com/symfony/symfony', isset($_SERVER['SYMFONY_VERSION']) ? $_SERVER['SYMFONY_VERSION'] : 'origin/master'),
-    array('svn', 'opensocial-php-client', 'http://opensocial-php-client.googlecode.com/svn/trunk', ''),
+    array('tar.gz', 'opensocial-php-client', 'http://opensocial-php-client.googlecode.com/files/opensocial-php-client-1.1.1.tar.gz', '1.1.1'),
 );
 
 foreach ($deps as $dep) {
@@ -31,7 +31,10 @@ foreach ($deps as $dep) {
 
     if ($scm == 'git') {
         system(sprintf('cd %s && git fetch -q origin && git reset --hard %s', escapeshellarg($installDir), escapeshellarg($rev)));
-    } elseif ($scm == 'svn') {
-        system(sprintf('svn export --force %s %s', escapeshellarg($url), escapeshellarg($installDir)));
+    } elseif ($scm == 'tar.gz') {
+        system(sprintf('rm -fr %s', escapeshellarg($installDir)));
+        system(sprintf('cd %s; wget %s', escapeshellarg($vendorDir),  escapeshellarg($url)));
+        system(sprintf('cd %s; tar xzvf %s-%s.tar.gz', escapeshellarg($vendorDir),  escapeshellarg($name), escapeshellarg($rev)));
+        system(sprintf('cd %s; rm %s-%s.tar.gz', escapeshellarg($vendorDir),  escapeshellarg($name), escapeshellarg($rev)));
     }
 }

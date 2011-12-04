@@ -9,7 +9,7 @@
 $vendorDir  = __DIR__ . '/../vendor';
 $symfonyDir = $vendorDir . '/symfony/src';
 
-set_include_path(get_include_path() . PATH_SEPARATOR . $vendorDir . '/opensocial-php-client/src/osapi');
+set_include_path(get_include_path() . PATH_SEPARATOR . $vendorDir . '/opensocial-php-client/osapi');
 require_once "osapi.php";
 
 require_once $symfonyDir . '/Symfony/Component/ClassLoader/UniversalClassLoader.php';
