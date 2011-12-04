@@ -1,0 +1,5 @@
+phpunit.xml
+coverage
+vendor/symfony
+vendor/opensocial-php-client
+Tests/autoload.php

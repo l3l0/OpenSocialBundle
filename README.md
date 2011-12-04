@@ -69,3 +69,12 @@ This Bundle provides integration with osapi (OpenSocial API). Right now bundle p
                         l3l0_osapi:
                             public_path: /app_dev.php/demo
 *TODO*
+
+## Unit Tests
+===============
+
+To run test you have to:
+
+1. Make sure that you have ``phpunit 3.6`` with ``PHPUnit_MockObject 1.1`` installed.
+2. Download vendors via ``cd /path/to/opensocial/bundle/; php vendor/vendors.php``. Script requires svn and git.
+3. Run command ``phpunit`` in bundle directory.

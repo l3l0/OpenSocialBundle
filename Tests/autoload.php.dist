@@ -1,0 +1,35 @@
+<?php
+
+/*
+ * This file is part of the OpenSocialBundle package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+$vendorDir  = __DIR__ . '/../vendor';
+$symfonyDir = $vendorDir . '/symfony/src';
+
+set_include_path(get_include_path() . PATH_SEPARATOR . $vendorDir . '/opensocial-php-client/src/osapi');
+require_once "osapi.php";
+
+require_once $symfonyDir . '/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+
+use Symfony\Component\ClassLoader\UniversalClassLoader;
+
+$loader = new UniversalClassLoader();
+$loader->registerNamespace('Symfony', $symfonyDir);
+$loader->register();
+
+spl_autoload_register(function($class)
+{
+    if (0 === strpos($class, 'l3l0\\Bundle\\OpenSocialBundle\\')) {
+        $path = implode('/', array_slice(explode('\\', $class), 2)) . '.php';
+
+        if (file_exists(__DIR__ . '/../../' . $path))
+        {
+            require_once __DIR__ . '/../../' . $path;
+
+            return true;
+        }
+    }
+});
