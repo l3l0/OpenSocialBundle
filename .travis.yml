@@ -6,7 +6,9 @@ php:
 evn:
   - SYMFONY_VERSION=origin/master
 
-before_script: php vendor/vendors.php
+before_script:
+  - ./bin/ci/install_extensions.sh
+  - php vendor/vendors.php
 
 notifications:
   email:
