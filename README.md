@@ -18,7 +18,7 @@ This Bundle provides integration with osapi (OpenSocial API). Right now bundle p
 
             ./bin/vendors install
 
-    * Enable autoload in ``app/autoload.php``:
+    * Enable autoload by register namespace in ``app/autoload.php``:
 
             $loader = new UniversalClassLoader();
             $loader->registerNamespace(array(
@@ -26,7 +26,7 @@ This Bundle provides integration with osapi (OpenSocial API). Right now bundle p
                 'l3l0' => __DIR__ . '/../vendor/bundles'
             );
 
-    * Register namespace ``app/AppKernel.php``:
+    * Register bundle ``app/AppKernel.php``:
 
             public function registerBundles()
             {
